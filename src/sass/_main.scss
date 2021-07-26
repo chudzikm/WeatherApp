@@ -1,0 +1,168 @@
+//scrollbar
+
+body {
+    position: relative;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: $secondaryColorDark;
+        background-color: #111;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $primaryColor;
+        border-radius: 5px;
+    }
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    @include flex($flexDirection:row);
+    padding: 0 1rem;
+    height: $navHeightMobile;
+    color: $primaryColor;
+    z-index: 1;
+
+    @include desktopUp {
+        justify-content: start;
+        height: $navHeightDesktop;
+        padding: 0 3rem;
+        font-size: 1rem;
+        letter-spacing: 2px;
+    }
+
+    &__name {
+        text-transform: uppercase;
+        padding-left: 1rem;
+        letter-spacing: 1px;
+        font-size: 0.85rem;
+
+        @include desktopUp {
+            font-size: 1rem;
+        }
+    }
+
+    &__logotype {
+        height: 40%;
+
+        @include desktopUp {
+            height: auto;
+        }
+    }
+}
+
+.section {
+    position: relative;
+    @include flex;
+    height: 100vh;
+    padding: 1rem;
+
+    @include desktopUp {
+        flex-direction: row;
+        padding: 3rem;
+    }
+
+    &--welcome {
+        justify-content: space-between;
+        height: 100vh;
+        padding: calc(#{$navHeightMobile} + 1rem) 0 0 0;
+        background: $secondaryColorDark;
+        color: $white;
+
+        @include desktopUp {
+            padding: 1rem 0 0 3rem;
+            justify-content: center
+        }
+    }
+
+    &--weather {
+        position: relative;
+        display: block;
+        height: auto;
+        background: $greyLight;
+        color: $secondaryColorDark;
+        padding-bottom: 3rem;
+
+        @include desktopUp {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            grid-template-rows: 1fr auto auto auto;
+            gap: $gap;
+            padding-bottom: 5rem;
+        }
+    }
+
+    &--hidden {
+        display: none;
+    }
+}
+
+.col {
+    @include flex;
+    width: 100%;
+    height: auto;
+
+    @include desktopUp {
+        height: 100%;
+        width: 50%;
+    }
+
+    &--form {
+        height: 50%;
+        padding: 1rem;
+
+        @include desktopUp {
+            height: auto;
+            padding: 0;
+        }
+    }
+
+    &--weather {
+        width: 100%;
+
+        @include desktopUp {
+            grid-area: 1 / 1 / 2 / 6;
+        }
+    }
+}
+
+.footer {
+    position: relative;
+    @include flex;
+    padding: 3rem 1rem;
+    background-color: $greyMedium;
+
+    &__icon {
+        position: absolute;
+        top: -1.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        padding-bottom: 0.5rem;
+    }
+
+    &__copyright {
+        font-size: 0.75rem;
+        font-weight: $fontBold;
+
+        &-link {
+
+            &:link,
+            &:visited {
+                color: $secondaryColorDark;
+                text-decoration: none;
+                @include basicTransition;
+            }
+
+            &:hover,
+            &:focus {
+                color: $primaryColor
+            }
+        }
+    }
+}
