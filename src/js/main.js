@@ -24,12 +24,12 @@ const getCityName = () => {
 
 const unixTimestampConverter = (timestamp) =>{
     let time = new Date(timestamp*1000);
-    return `${time.getHours()}:${time.getMinutes()}`;
+    return `${time.getHours()}:${time.getMinutes()>9 ? time.getMinutes() : ('0' + time.getMinutes())}`;
 }
 
 const unixDayConverter = (timestamp) =>{
     let time = new Date(timestamp*1000);
-    return `${time.getDate()}.${time.getMonth()<10 ? ('0' + time.getMonth()) : time.getMonth()}`;
+    return `${time.getDate()}.${time.getMonth()< 9 ? ('0' + (time.getMonth() + 1)) : (time.getMonth() + 1)}`;
 }
 
 const removeForecastBoxes = () =>{
