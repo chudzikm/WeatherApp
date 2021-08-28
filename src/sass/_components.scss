@@ -115,6 +115,29 @@
         }
 
     }
+
+    &__geolocation {
+        @include flex($flexDirection:row, $justifyContent:flex-start);
+        padding-top: 1rem;
+        font-size: 0.675rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    &__icon {
+        margin-right: 0.25rem;
+    }
+
+    &__geolocation,
+    &__icon {
+        opacity: 0.5;
+        @include basicTransition;
+
+        &:hover {
+            cursor: pointer;
+            opacity: 1;
+        }
+    }
 }
 
 .city-image {

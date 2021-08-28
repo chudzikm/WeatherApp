@@ -1,10 +1,14 @@
+// https://www.weatherbit.io/ API
+const apiKey = 'b948d1aa01ff420cb865cf6e23f212c6';
+const apiUrl = 'https://api.weatherbit.io/v2.0/';
+
 const input = document.querySelector('.form__input');
 const btn = document.querySelector('.form__btn');
 const messageBox = document.querySelector('.form__message')
-const apiKey = 'a1f620d2d5c3c1f46482f999286156ca';
-const apiUrl = 'https://api.openweathermap.org/data/2.5/';
 const section = document.querySelector('.section--weather');
 const cta = document.querySelector('.cta');
+const geoLocationBtn = document.querySelector('.form__geolocation');
+let clickSrc;
 
 // The first capital letter for the name of the city
 const firstCapitalLetter = (word) => {
@@ -14,17 +18,6 @@ const firstCapitalLetter = (word) => {
 const errorMsg = (message) => {
     messageBox.classList.remove('form__message--hidden');
     messageBox.innerText = message;
-}
-
-//unix time and day converter
-const unixTimestampConverter = (timestamp) =>{
-    let time = new Date(timestamp*1000);
-    return `${time.getHours()}:${time.getMinutes()>9 ? time.getMinutes() : ('0' + time.getMinutes())}`;
-}
-
-const unixDayConverter = (timestamp) =>{
-    let time = new Date(timestamp*1000); 
-    return `${time.getDate()}.${time.getMonth()< 9 ? ('0' + (time.getMonth() + 1)) : (time.getMonth() + 1)}`;
 }
 
 //scroll to the section
@@ -57,16 +50,16 @@ const removeForecastBoxes = () =>{
 const getCityName = () => {
    return new Promise((resolve) =>{
         cityName = input.value;
-        document.querySelector('.city__name').textContent = firstCapitalLetter(cityName);
         resolve(cityName);
    })
 }
 
 // Current weather
-const getCurrentWeather = (cityName) =>{
+const getCurrentWeather = (location) =>{
     return(
-        fetch(`${apiUrl}/weather?q=${cityName}&appid=${apiKey}&lang=pl&units=metric`)
-        .then (response =>{
+        fetch(apiUrl + 'current?&' + (clickSrc=='searchBtn' ? ('city=' + location) : ('&lat=' + location.coords.latitude + '&lon=' + location.coords.longitude)
+        ) + '&key=' + apiKey + '&lang=pl')
+        .then (response => {
             return  (response.status == 200 ? response.json() : errorMsg('Niestety tej miejscowości nie znaleziono, wpisz inną i wyszukaj ponownie.'))
         })
         .then(data => {
@@ -79,26 +72,48 @@ const getCurrentWeather = (cityName) =>{
  }
 
 const showCurrentWeather = (data) =>{
-    return new Promise((resolve) =>{
-        const {coord, main, sys, weather, wind, visibility} = data;
-        document.querySelector('.sun__sunrise').textContent = unixTimestampConverter(sys.sunrise);
-        document.querySelector('.sun__sunset').textContent = unixTimestampConverter(sys.sunset);
-        document.querySelector('.current-weather__icon').src = `dist/images/icons/${weather[0].icon}.svg`;
-        document.querySelector('.current-weather__name').textContent = weather[0].description;
-        document.querySelector('.current-weather__temp').innerHTML = `${main.temp.toFixed(1)} <sup>o</sup>C`;
-        document.querySelector('.current-weather__feels-like').textContent = main.feels_like.toFixed(1);
-        document.querySelector('.current-weather__pressure').textContent = main.pressure;
-        document.querySelector('.current-weather__humidity').textContent = main.humidity;
-        document.querySelector('.current-weather__visibility').textContent = visibility / 1000;
-        document.querySelector('.current-weather__wind-speed').textContent = (wind.speed * 3.6).toFixed(2);
-        resolve(coord)
-   })
+        const place = document.querySelector('.city__name');
+        console.log(data)
+        const {
+            app_temp:feelsLikeTemp,
+            city_name:cityName,
+            lat, lon,
+            rh: humidity, 
+            sunrise, 
+            sunset, 
+            slp:pressure,
+            vis:visibility, 
+            temp, 
+            weather, 
+            wind_spd:windSpeed
+            } = data.data[0];
+
+        if (clickSrc=='searchBtn') {
+            place.innerHTML = cityName;
+            
+        } else {
+            place.innerHTML = `
+            Szerokość geograficzna: ${lat.toFixed(2)}<sup>o</sup><br> 
+            Długość geograficzna: ${lon.toFixed(2)}<sup>o</sup>`
+        }
+
+        document.querySelector('.sun__sunrise').textContent = `${Number(sunrise.slice(0,2))+2}:${sunrise.slice(-2)}`
+        document.querySelector('.sun__sunset').textContent = `${Number(sunset.slice(0,2))+2}:${sunset.slice(-2)}`;
+        document.querySelector('.current-weather__icon').src = `dist/images/icons/${weather.icon}.svg`;
+        document.querySelector('.current-weather__name').textContent = weather.description;
+        document.querySelector('.current-weather__temp').innerHTML = `${temp} <sup>o</sup>C`;
+        document.querySelector('.current-weather__feels-like').textContent = feelsLikeTemp;
+        document.querySelector('.current-weather__pressure').textContent = pressure;
+        document.querySelector('.current-weather__humidity').textContent = humidity;
+        document.querySelector('.current-weather__visibility').textContent = visibility;
+        document.querySelector('.current-weather__wind-speed').textContent = (windSpeed * 3.6).toFixed(2);
 }
 
 // Forecast
-const getForecast = (coord) => {
+    const getForecast = (location) => {
     return(
-        fetch(`${apiUrl}/onecall?lat=${coord.lat}&lon=${coord.lon}&exclude=current,minutely,hourly&appid=${apiKey}&lang=pl&units=metric`)
+        fetch(apiUrl + 'forecast/daily?&' + (clickSrc=='searchBtn' ? ('city=' + location) : ('&lat=' + location.coords.latitude + '&lon=' + location.coords.longitude)
+        ) + '&key=' + apiKey + '&lang=pl')
        .then(response => response.json())
        .then(data => {
           return data;
@@ -110,7 +125,8 @@ const getForecast = (coord) => {
 }
 
 const showForecast = (data) => {
-    const dailyForecast = data.daily;
+    const dailyForecast = data.data
+    console.log(dailyForecast)
     removeForecastBoxes();
 
     dailyForecast.forEach(item => {
@@ -124,31 +140,60 @@ const showForecast = (data) => {
         forecastBox.appendChild(icon).classList.add('forecast__icon');
         forecastBox.appendChild(name).classList.add('forecast__name');
         forecastBox.appendChild(temp).classList.add('forecast__temp');
-        forecastBox.querySelector('.forecast__date').innerText = unixDayConverter(item.dt);
-        forecastBox.querySelector('.forecast__icon').src = `dist/images/icons/${item.weather[0].icon}.svg`;
-        forecastBox.querySelector('.forecast__name').innerText = firstCapitalLetter(item.weather[0].description);
-        forecastBox.querySelector('.forecast__temp').innerHTML = `${item.temp.day.toFixed(1)} <sup>o</sup>C`;
+        forecastBox.querySelector('.forecast__date').innerText = item.valid_date.substr(5).split('-').reverse().join('.');
+        forecastBox.querySelector('.forecast__icon').src = `dist/images/icons/${item.weather.icon}.svg`;
+        forecastBox.querySelector('.forecast__name').innerText = firstCapitalLetter(item.weather.description);
+        forecastBox.querySelector('.forecast__temp').innerHTML = `${item.temp.toFixed(0)} <sup>o</sup>C`;
     });
-    section.classList.remove('section--hidden');
+    
 }
 
+//geolocation
+const getGeoLocation = () => {
+    return new Promise((resolve, reject) => {
+        if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(resolve,reject);
+
+        }
+    })
+}
+
+// show latitude and longitude
+const showPosition = (position) => {
+    document.querySelector('.city__name').innerHTML = `
+    Szerokość geograficzna: ${position.coords.latitude.toFixed(2)}<sup>o</sup><br> 
+    Długość geograficzna: ${position.coords.longitude.toFixed(2)}<sup>o</sup>
+    `
+}
+
+
+/////////////start Application/////////////////
 const startApp = async() => {
-    const cityName = await(getCityName())
-    const currentWeather = await getCurrentWeather(cityName);
-    const coords = await showCurrentWeather(currentWeather);
-    const forecast = await getForecast(coords);
-    await showForecast(forecast);
+    const data = clickSrc == 'searchBtn' ? await getCityName() : await getGeoLocation();
+    const currentWeather = await getCurrentWeather(data);
+    showCurrentWeather(currentWeather);
+    const forecast = await getForecast(data);
+    showForecast(forecast);
+    section.classList.remove('section--hidden');
     scrollToSection();
- }
+}
+
 
 btn.addEventListener('click', function(e){
     e.preventDefault();
+    clickSrc = 'searchBtn';
     input.value!=='' ? startApp() : errorMsg('Wpisz nazwę miejscowości, żeby sprawdzić pogodę.')
 })
 
 input.addEventListener('keydown', function(e){
     if (e.keydown=='enter') {
         e.preventDefault();
-        startApp()
+        clickSrc = 'searchBtn';
+        startAppCityName()
     }
+})
+
+geoLocationBtn.addEventListener('click', ()=>{
+    clickSrc = 'geoBtn';
+    startApp();
 })
