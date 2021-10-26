@@ -1,6 +1,8 @@
 // https://www.weatherbit.io/ API
-const apiKey = 'b948d1aa01ff420cb865cf6e23f212c6';
+const apiKey = 'ce3bd9b235b547529a22161ec85fd1ef';
 const apiUrl = 'https://api.weatherbit.io/v2.0/';
+
+
 
 const input = document.querySelector('.form__input');
 const btn = document.querySelector('.form__btn');
