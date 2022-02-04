@@ -49,7 +49,7 @@ const removeForecastBoxes = () => {
 // Get the name of the city
 const getCityName = () => {
   return new Promise((resolve) => {
-    cityName = input.value;
+    const cityName = input.value;
     resolve(cityName);
   });
 };
@@ -201,16 +201,6 @@ const getGeoLocation = () => {
   });
 };
 
-// show latitude and longitude
-const showPosition = (position) => {
-  document.querySelector(".city__name").innerHTML = `
-    Szerokość geograficzna: ${position.coords.latitude.toFixed(
-      2
-    )}<sup>o</sup><br> 
-    Długość geograficzna: ${position.coords.longitude.toFixed(2)}<sup>o</sup>
-    `;
-};
-
 /////////////start Application/////////////////
 const startApp = async () => {
   const data =
@@ -235,7 +225,6 @@ input.addEventListener("keydown", function (e) {
   if (e.keydown == "enter") {
     e.preventDefault();
     clickSrc = "searchBtn";
-    startAppCityName();
   }
 });
 
