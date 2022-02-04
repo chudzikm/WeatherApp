@@ -1,116 +1,179 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="Sprawdź swoją pogodę">
-    <meta name="description" content="Nie wiesz jaka jest pogoda na zewnątrz? Szukasz prognozy na następny tydzień? Wpisz nazwę miejscowości i znajdź odpowiedź...">
-    <meta name="keywords" content="pogoda, deszcz, słońca, prognoza pogody, weather, forecast, najlepsza pogoda, pogoda w Polsce, pogoda w Europie">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="Polish">
-    <meta name="author" content="Magda Chudzik">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="title" content="Sprawdź swoją pogodę" />
+    <meta
+      name="description"
+      content="Nie wiesz jaka jest pogoda na zewnątrz? Szukasz prognozy na następny tydzień? Wpisz nazwę miejscowości i znajdź odpowiedź..."
+    />
+    <meta
+      name="keywords"
+      content="pogoda, deszcz, słońca, prognoza pogody, weather, forecast, najlepsza pogoda, pogoda w Polsce, pogoda w Europie"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Polish" />
+    <meta name="author" content="Magda Chudzik" />
     <title>Sprawdź swoją pogodę</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="dist/css/style.min.css">
-    <link rel="shortcut icon" href="dist/images/favicon.svg" type="image/x-icon">
-</head>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dist/css/style.min.css" />
+    <link
+      rel="shortcut icon"
+      href="dist/images/favicon.svg"
+      type="image/x-icon"
+    />
+  </head>
 
-<body>
+  <body>
     <header class="header">
-        <img src="dist/images/sun-logotype.svg" alt="" class="header__logotype"> <span class="header__name">Sprawdź pogodę</span>
+      <img src="dist/images/sun-logotype.svg" alt="" class="header__logotype" />
+      <span class="header__name">Sprawdź pogodę</span>
     </header>
 
     <section class="section section--welcome">
-        <div class="col col--form">
-            <main class="content">
-                <h1 class="content__heading">Czy wiesz jaka jest pogoda?</h1>
-                <h6 class="content__description">Wpisz miejscowość i sprawdź pogodę</h6>
-                <form action="" class="form">
-                    <input type="text" class="form__input" placeholder="Podaj miejscowość">
-                    <button class="form__btn" data-target="weather">
-                        <img src="dist/images/icon-search.svg" alt="" srcset="">
-                    </button>
-                    <div class="form__geolocation">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="form__icon" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <circle cx="12" cy="12" r="3" />
-                        <circle cx="12" cy="12" r="8" />
-                        <line x1="12" y1="2" x2="12" y2="4" />
-                        <line x1="12" y1="20" x2="12" y2="22" />
-                        <line x1="20" y1="12" x2="22" y2="12" />
-                        <line x1="2" y1="12" x2="4" y2="12" />
-                        </svg>
-                        Zlokalizuj mnie
-                    </div>
-                    <div class="form__message form__message--hidden"></div>
-                </form>
-            </main>
-        </div>
-        <picture class="hero">
-            <img src="dist/images/hero-image.webp" alt="" class="hero__img">
-        </picture>
+      <div class="col col--form">
+        <main class="content">
+          <h1 class="content__heading">Czy wiesz jaka jest pogoda?</h1>
+          <h6 class="content__description">
+            Wpisz miejscowość i sprawdź pogodę
+          </h6>
+          <form action="" class="form">
+            <input
+              type="text"
+              class="form__input"
+              placeholder="Podaj miejscowość"
+            />
+            <button class="form__btn" data-target="weather">
+              <img src="dist/images/icon-search.svg" alt="" srcset="" />
+            </button>
+            <div class="form__geolocation">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="form__icon"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="#ffffff"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <circle cx="12" cy="12" r="3" />
+                <circle cx="12" cy="12" r="8" />
+                <line x1="12" y1="2" x2="12" y2="4" />
+                <line x1="12" y1="20" x2="12" y2="22" />
+                <line x1="20" y1="12" x2="22" y2="12" />
+                <line x1="2" y1="12" x2="4" y2="12" />
+              </svg>
+              Zlokalizuj mnie
+            </div>
+            <div class="form__message form__message--hidden"></div>
+          </form>
+        </main>
+      </div>
+      <picture class="hero">
+        <img src="dist/images/hero-image.webp" alt="" class="hero__img" />
+      </picture>
     </section>
 
-    <section class="section section--weather section--hidden" data-name="weather">
-        <div class="col col--weather">
-            <div class="city">
-                <h2 class="city__name"></h2>
-                <div class="sun">
-                    <img src="dist/images/sunrise.svg" alt="" class="sun__icon">
-                    <ul class="sun__items">
-                        <li class="sun__item">Wschód słońca: <time class="sun__sunrise"></time></li>
-                        <li class="sun__item">Zachód słońca: <time class="sun__sunset"></time></li>
-                    </ul>
-                </div>
-            </div>
-            <h3 class="uppercase heading">Teraz</h3>
-            <div class="box">
-                <div class="col">
-                    <img src="dist/images/sunrise.svg" alt="" class="current-weather__icon">
-                    <span class="current-weather__name uppercase"></span>
-                    <span class="current-weather__temp">
-                    </span>
-                </div>
-                <div class="col">
-                   <div class="current-weather">
-                    <ul class="current-weather__items">
-                        <li class="current-weather__item">Temperatura odczuwalna: <span class="current-weather__feels-like"></span> <sup>o</sup>C</li>
-                        <li class="current-weather__item">Ciśnienie: <span class="current-weather__pressure"></span> hPa</li>
-                        <li class="current-weather__item">Wilgotność powietrza: <span class="current-weather__humidity"></span>%</li>
-                        <li class="current-weather__item">Widoczność: <span class="current-weather__visibility"></span> km</li>
-                        <li class="current-weather__item">Wiatr: <span class="current-weather__wind-speed"></span> km/h</li>
-                    </ul>
-
-                   </div>
-                </div>
-            </div>
+    <section
+      class="section section--weather section--hidden"
+      data-name="weather"
+    >
+      <div class="col col--weather">
+        <div class="city">
+          <h2 class="city__name"></h2>
+          <div class="sun">
+            <img src="dist/images/sunrise.svg" alt="" class="sun__icon" />
+            <ul class="sun__items">
+              <li class="sun__item">
+                Wschód słońca: <time class="sun__sunrise"></time>
+              </li>
+              <li class="sun__item">
+                Zachód słońca: <time class="sun__sunset"></time>
+              </li>
+            </ul>
+          </div>
         </div>
-
-        <div class="col city-image"></div>
-
-        <h3 class="uppercase heading heading--forecast">Prognoza pogody 16-dniowa</h3>
-
-        <div class="cta">
-            <span class="cta__copy">
-                Sprawdź dla innego miasta
-            </span>
-            <img src="dist/images/arrow.svg" alt="" class="cta__icon">
+        <h3 class="uppercase heading">Teraz</h3>
+        <div class="box">
+          <div class="col">
+            <img
+              src="dist/images/sunrise.svg"
+              alt=""
+              class="current-weather__icon"
+            />
+            <span class="current-weather__name uppercase"></span>
+            <span class="current-weather__temp"> </span>
+          </div>
+          <div class="col">
+            <div class="current-weather">
+              <ul class="current-weather__items">
+                <li class="current-weather__item">
+                  Temperatura odczuwalna:
+                  <span class="current-weather__feels-like"></span>
+                  <sup>o</sup>C
+                </li>
+                <li class="current-weather__item">
+                  Ciśnienie: <span class="current-weather__pressure"></span> hPa
+                </li>
+                <li class="current-weather__item">
+                  Wilgotność powietrza:
+                  <span class="current-weather__humidity"></span>%
+                </li>
+                <li class="current-weather__item">
+                  Widoczność:
+                  <span class="current-weather__visibility"></span> km
+                </li>
+                <li class="current-weather__item">
+                  Wiatr: <span class="current-weather__wind-speed"></span> km/h
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
+      </div>
 
+      <div class="col city-image"></div>
+
+      <h3 class="uppercase heading heading--forecast">
+        Prognoza pogody 16-dniowa
+      </h3>
+
+      <div class="cta">
+        <span class="cta__copy"> Sprawdź dla innego miasta </span>
+        <img src="dist/images/arrow.svg" alt="" class="cta__icon" />
+      </div>
     </section>
 
     <footer class="footer">
-        <img src="dist/images/sun-logotype.svg" alt="" srcset="" class="footer__icon">
-        <span class="footer__copyright">
-            Project and coding by <a href="https://frontend.magdachudzik.pl" target="_blank" class="footer__copyright-link">Magda Chudzik</a>
-        </span>
+      <img
+        src="dist/images/sun-logotype.svg"
+        alt=""
+        srcset=""
+        class="footer__icon"
+      />
+      <span class="footer__copyright">
+        Project and coding by
+        <a
+          href="https://frontend.magdachudzik.pl"
+          target="_blank"
+          class="footer__copyright-link"
+          >Magda Chudzik</a
+        >
+      </span>
     </footer>
 
     <script src="dist/js/main.js"></script>
-    
-</body>
+  </body>
 </html>

@@ -1,0 +1,22 @@
+{
+  "name": "sprawdzpogode",
+  "version": "1.0.0",
+  "description": "Check online here --> https://chudzikm.github.io/WeatherApp/",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chudzikm/WeatherApp.git"
+  },
+  "author": "Magda Chudzik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chudzikm/WeatherApp/issues"
+  },
+  "homepage": "https://github.com/chudzikm/WeatherApp#readme",
+  "devDependencies": {
+    "eslint": "^8.8.0",
+    "prettier": "^2.5.1"
+  }
+}
